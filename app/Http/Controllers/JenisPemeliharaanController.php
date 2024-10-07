@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\JenisPemeliharaan;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-
-class JenisPemeliharaanController extends Controller
+use Illuminate\Foundation\Validation\ValidatesRequests;
+class JenisPemeliharaanController
 {
-
+    use ValidatesRequests;
     public function index()
     {
         $jenis_pemeliharaan = JenisPemeliharaan::where('aktif', '=', 'y')->get();

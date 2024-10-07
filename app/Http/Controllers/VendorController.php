@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-
-class VendorController extends Controller
+use Illuminate\Foundation\Validation\ValidatesRequests;
+class VendorController
 {
-
+    use ValidatesRequests;
     public function index()
     {
         $vendor = Vendor::where('aktif', '=', 'y')->get();

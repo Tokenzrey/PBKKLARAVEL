@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-
-class KategoriController extends Controller
+use Illuminate\Foundation\Validation\ValidatesRequests;
+class KategoriController
 {
+    use ValidatesRequests;
     public function index()
     {
         $kategori = Kategori::where('aktif', '=', 'y')->get();

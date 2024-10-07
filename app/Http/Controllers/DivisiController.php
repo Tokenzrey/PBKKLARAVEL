@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Divisi;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 
-class DivisiController extends Controller
+class DivisiController
 {
-
+    use ValidatesRequests;
     public function index()
     {
         $divisi = Divisi::where('aktif', '=', 'y')->get();

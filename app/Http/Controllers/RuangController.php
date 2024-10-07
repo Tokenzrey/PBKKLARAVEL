@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Ruang;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-
-class RuangController extends Controller
+use Illuminate\Foundation\Validation\ValidatesRequests;
+class RuangController
 {
+    use ValidatesRequests;
     public function index()
     {
         $ruang = Ruang::where('aktif', 'y')->get();
