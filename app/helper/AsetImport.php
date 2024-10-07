@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace App\Helper;
 
 use Illuminate\Support\Carbon;
 use App\Models\Aset;
