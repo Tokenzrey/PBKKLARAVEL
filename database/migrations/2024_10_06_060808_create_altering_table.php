@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMasaManfaatToKategoriTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -42,4 +42,4 @@ class AddMasaManfaatToKategoriTable extends Migration
             $table->dropColumn('kode');
         });
     }
-}
+};

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('jenis_kelamin', 20);
-            $table->bigInteger('no_telepon');
+            $table->string('no_telepon', 20);
             $table->text('alamat');
             $table->string('status')->comment('ADMIN;USER;  ');
             $table->enum('aktif', ['y', 't'])->default('y');
