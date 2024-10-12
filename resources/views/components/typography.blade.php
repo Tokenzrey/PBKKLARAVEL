@@ -1,10 +1,10 @@
 {{-- resources/views/components/typography.blade.php --}}
 @props([
-'as' => 'p',
-'class' => '',
-'weight' => 'regular',
-'font' => 'poppins', // poppins atau futura
-'variant' => 'p',
+'as',
+'class',
+'weight',
+'font', // poppins atau futura
+'variant',
 ])
 
 @php

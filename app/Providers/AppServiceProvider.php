@@ -26,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('button-link', \App\View\Components\Links\ButtonLink::class);
         Blade::component('icon-link', \App\View\Components\Links\IconLink::class);
         Blade::component('unstyled-link', \App\View\Components\Links\UnstyledLink::class);
-
+        Blade::component('typography', \App\View\Components\Typography::class);
     }
 }

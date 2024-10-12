@@ -1,10 +1,15 @@
 <x-app-layout>
     <div class="p-6 space-y-10">
-        <h1 class="text-3xl font-bold mb-8">Component Sandbox</h1>
+        {{-- Page Title --}}
+        <x-typography as="h1" variant="h1" weight="extrabold" class="mb-8">
+            Component Sandbox
+        </x-typography>
 
         {{-- Section: Button Link --}}
         <section>
-            <h2 class="text-2xl font-semibold mb-4">Button Link Component</h2>
+            <x-typography as="h2" variant="h2" weight="semibold" class="mb-4">
+                Button Link Component
+            </x-typography>
             <div class="flex gap-4">
                 <x-button-link href="/" size="base" variant="primary">
                     Home
@@ -26,18 +31,22 @@
 
         {{-- Section: Icon Link --}}
         <section>
-            <h2 class="text-2xl font-semibold mb-4">Icon Link Component</h2>
+            <x-typography as="h2" variant="h2" weight="semibold" class="mb-4">
+                Icon Link Component
+            </x-typography>
             <div class="flex gap-4">
                 <x-icon-link href="/" size="base" variant="primary" icon="heroicon-o-home" />
-                <x-icon-link href="https://github.com" size="lg" variant="outline-success"
-                    icon="heroicon-o-link" openNewTab="true" />
+                <x-icon-link href="https://github.com" size="lg" variant="outline-success" icon="heroicon-o-link"
+                    openNewTab="true" />
                 <x-icon-link href="/trash" size="sm" variant="danger" icon="heroicon-o-trash" />
             </div>
         </section>
 
         {{-- Section: Unstyled Link --}}
         <section>
-            <h2 class="text-2xl font-semibold mb-4">Unstyled Link Component</h2>
+            <x-typography as="h2" variant="h2" weight="semibold" class="mb-4">
+                Unstyled Link Component
+            </x-typography>
             <div class="flex gap-4">
                 <x-unstyled-link href="/" class="text-blue-500 hover:underline">
                     Internal Link
