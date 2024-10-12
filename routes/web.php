@@ -23,6 +23,10 @@ Route::get('/sandbox/table', function () {
     return view('sandbox.table');
 });
 
+Route::get('/sandbox/modal', function () {
+    return view('sandbox.modal');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
