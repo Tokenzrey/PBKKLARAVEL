@@ -19,6 +19,10 @@ Route::get('/sandbox/typography', function () {
     return view('sandbox.typography');
 });
 
+Route::get('/sandbox/table', function () {
+    return view('sandbox.table');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
