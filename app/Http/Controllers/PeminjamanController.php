@@ -11,13 +11,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class PeminjamanController
+class PeminjamanController extends Controller
 {
     public function index(Request $request)
     {
         $keyword_search = $request->get('keyword_search');
 
         // Build the query to get all assets
+        // $aset = Aset::join('kategori', 'kategori.id', '=', 'aset.kategori_id')
+        //     ->join('ruang', 'ruang.id', '=', 'aset.ruang_id')
+        //     ->leftJoin('peminjaman', function ($join) {
+        //         $join->on('peminjaman.aset_id', '=', 'aset.id')
+        //             ->where('peminjaman.status', '!=', 'DITERIMA');
+        //     })
+        //     ->where(function ($query) use ($keyword_search) {
+        //         $query->where('aset.nama', 'like', '%' . strtolower($keyword_search) . '%')
+        //             ->orWhere('aset.tempat', 'like', '%' . strtolower($keyword_search) . '%')
+        //             ->orWhere('kategori.nama', 'like', '%' . strtolower($keyword_search) . '%')
+        //             ->orWhere('ruang.nama', 'like', '%' . strtolower($keyword_search) . '%');
+        //     })
+        //     ->where('aset.aktif', '=', 'y')
+        //     ->groupBy('aset.id') // Ensure each asset is only listed once
+        //     ->orderBy('aset.id', 'asc')
+        //     ->orderBy('peminjaman.created_at', 'desc')
+        //     ->distinct()
+        //     ->paginate(6);
         $aset = Aset::join('kategori', 'kategori.id', '=', 'aset.kategori_id')
             ->join('ruang', 'ruang.id', '=', 'aset.ruang_id')
             ->leftJoin('peminjaman', function ($join) {
@@ -31,14 +49,15 @@ class PeminjamanController
                     ->orWhere('ruang.nama', 'like', '%' . strtolower($keyword_search) . '%');
             })
             ->where('aset.aktif', '=', 'y')
-            ->groupBy('aset.id') // Ensure each asset is only listed once
+            ->select('aset.id', 'aset.nama', 'aset.tempat', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama', 'peminjaman.status', 'peminjaman.created_at')
+            // ->groupBy('aset.id') // Group by asset ID to ensure unique results
             ->orderBy('aset.id', 'asc')
             ->orderBy('peminjaman.created_at', 'desc')
             ->distinct()
             ->paginate(6);
 
         $kategori = Kategori::where('aktif', '=', 'y')->get();
-        return view('peminjaman.index', [
+        return view('peminjaman', [
             'asets' => $aset,
             'kategori' => $kategori
         ]);
