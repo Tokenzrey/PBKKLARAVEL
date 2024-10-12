@@ -7,6 +7,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/sandbox/button', function () {
+    return view('sandbox.button');
+});
+
+Route::get('/sandbox/link', function () {
+    return view('sandbox.link');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

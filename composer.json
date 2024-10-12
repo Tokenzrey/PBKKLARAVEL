@@ -2,12 +2,19 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "blade-ui-kit/blade-heroicons": "^2.4",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "maatwebsite/excel": "^3.1",
+        "mkocansey/bladewind": "^2.7",
+        "phpoffice/phpspreadsheet": "^1.29",
         "realrashid/sweet-alert": "^7.2"
     },
     "require-dev": {
@@ -25,7 +32,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/clsxm.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
