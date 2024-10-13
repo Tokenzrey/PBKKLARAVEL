@@ -10,6 +10,7 @@ use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
 
 class PeminjamanController extends Controller
 {
@@ -78,7 +79,7 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $aset_id = $request->aset_id;
-        $user = session('userdata')['id'];
+        $user = Auth::user()->id;
 
         $aset = Aset::find($aset_id);
 
@@ -234,8 +235,8 @@ class PeminjamanController extends Controller
 
     public function history_peminjaman_user()
     {
-        if (session('userdata')['status'] != 'ADMIN') {
-            $user_id = session('userdata')['id'];
+        if (Auth::user()->status != 'ADMIN') {
+            $user_id = Auth::user()->id;
             $history_peminjaman = Peminjaman::where('user_id', '=', $user_id)->get();
             $aset = Aset::where('aktif', '=', 'y')->get();
             $kategori = Kategori::where('aktif', '=', 'y')->get();
