@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="header border-b-neutral-40 !h-[80px]">
+        <div class="header border-b-neutral-40 !h-[80px] fixed bg-neutral-10">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="navbar-collapse justify-end">
@@ -51,7 +51,7 @@
                                             <div>{{ Auth::user()->nama }}</div>
 
                                             <div class="ms-1 nav-link">
-                                                <img src="/images/adminProfile.png" alt="Profile Image" />
+                                                <img src="{{ asset('storage/' . Auth::user()->gambar) }}" alt="Profile Image" />
                                             </div>
                                         </button>
                                     </x-slot>
@@ -122,9 +122,9 @@
                             <span class="nav-text">Aset </span>
                         </a>
                         <ul aria-expanded="false" class="mm-collapse">
-                            <li><a href="/">Data Aset</a></li>
+                            <li><a href="{{ route('aset.index') }}">Data Aset</a></li>
                             {{-- <li><a href="{{ route('aset.history') }}">History Aset</a></li> --}}
-                            <li><a href="/">Scann QrCode</a></li>
+                            {{-- <li><a href="/">Scann QrCode</a></li> --}}
                             {{-- <li><a href="/">Penjadwalan Pemeliharaan</a></li> --}}
                         </ul>
                     </li>
@@ -139,11 +139,11 @@
                             <span class="nav-text">Peminjaman Manual</span>
                         </a>
                     </li>
-                    <li><a href="/">
+                    {{-- <li><a href="/">
                             <x-heroicon-s-qr-code class="icon" />
                             <span class="nav-text">Peminjaman Qr-Code</span>
                         </a>
-                    </li>
+                    </li> --}}
                     {{-- <li><a href="/">
                             <i class="fa fa-file"></i>
                             <span class="nav-text">History Peminjaman</span>
@@ -180,7 +180,7 @@
             </div>
         </div>
 
-        <div class="content-body">
+        <div class="content-body mt-20">
             <!-- row -->
             <div class="container-fluid">
                 {{ $slot }}

@@ -88,7 +88,7 @@
             "icon:trash | color:red | click:deleteUser({id}, '{first_name}')",
             ];
             @endphp
-            <x-bladewind::table :action_icons="$action_icons" name="staff_table" selectable="true">
+            <x-bladewind::table :action_icons="$action_icons" name="staff_table" selectable="false">
                 <x-slot name="header">
                     <th>Name</th>
                     <th>Department</th>
@@ -99,17 +99,10 @@
                     <td>Alfred Rowe</td>
                     <td>Consulting</td>
                     <td>alfred@therowe.com</td>
-                    <td class="flex gap-4">
-                        <!-- Edit Button -->
-                        <a class="bg-blue-500 hover:bg-blue-600 text-white shadow rounded-full p-2 text-sm me-1"
-                            title="Edit">
-                            <x-heroicon-o-pencil-square class="w-[20px]" />
-                        </a>
-
-                        <!-- Delete Button -->
-                        <a class="bg-red-500 hover:bg-red-600 text-white shadow rounded-full p-2 text-sm">
-                            <x-heroicon-s-trash class="w-[20px]" />
-                        </a>
+                    <td>
+                        <x-icon-button name="chat-bubble-left" tip="Send Message" color="green" onclick="sendMessage('Alfred')" />
+                        <x-icon-button name="pencil" onclick="redirect('/user/1')" />
+                        <x-icon-button name="trash" color="red" onclick="deleteUser(1, 'Alfred')" />
                     </td>
                 </tr>
                 <tr data-id="2">

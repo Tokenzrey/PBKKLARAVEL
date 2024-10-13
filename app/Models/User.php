@@ -47,16 +47,15 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $rules = [
-        'nama'            => 'required|min:3|max:255',
-        'jenis_kelamin'   => 'required',
-        'no_telepon'      => 'required|digits_between:10,15',
-        'alamat'          => 'required|min:10|max:255',
+        'nama'            => 'required|string|max:255',
+        'jenis_kelamin'   => '',
+        'no_telepon'      => 'digits_between:10,15',
+        'alamat'          => 'min:10|max:255',
         'status'          => 'required|in:USER,ADMIN',
-        'username'        => 'required|min:5|max:255|unique:users,username',
+        'username'        => 'min:5|max:255|unique:users,username',
         'email'           => 'required|email|unique:users,email',
-        'gambar'          => 'required|max:200',
+        'gambar'          => 'max:200',
         'password'        => 'required|min:8',
-        'divisi_id'       => 'required|exists:divisis,id',
     ];
 
     public function divisi()
