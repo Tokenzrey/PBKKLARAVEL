@@ -155,6 +155,7 @@ class PeminjamanController extends Controller
         $id = $request->id;
         $peminjaman = Peminjaman::where(['id' => $id])->first();
         $aset_id = $request->id_aset;
+        $aset_tanggal_pinjam = $request->tanggal_pinjam;
 
         if (!$peminjaman) {
             Alert::error('Error', 'Peminjaman tidak ditemukan');
@@ -164,15 +165,17 @@ class PeminjamanController extends Controller
         $peminjaman->status = $request->status;
         $peminjaman->save();
 
-        if ($peminjaman->status == 'diterima') {
-            // Hapus semua peminjaman lain dengan aset_id yang sama
+        if ($request->status == 'DITERIMA') {
+            // Hapus semua peminjaman lain dengan aset_id yang sama di tanggal yang sama
             Peminjaman::where('aset_id', $aset_id)
-                ->whereNotIn('status', ['DITERIMA', 'SELESAI'])
+                ->where('tanggal_pinjam', $aset_tanggal_pinjam)
+                ->whereNot('status', 'SELESAI')
+                ->whereNot('id', $id)
                 ->update(['status' => 'DITOLAK']);
         }
 
         Alert::success('Success', 'Status peminjaman berhasil diperbarui!');
-        return redirect()->route('peminjaman.data');
+        return redirect()->route('peminjaman.user-data');
     }
 
     public function destroy($id)
@@ -203,7 +206,7 @@ class PeminjamanController extends Controller
     {
         $filter = $request->input('filter');
 
-        $history_peminjaman = Peminjaman::where('status', '=', 'SELESAI')->get();
+        // $history_peminjaman = Peminjaman::orderBy('created_at', 'desc')->get();
         $aset = Aset::where('aktif', '=', 'y')->get();
         $kategori = Kategori::where('aktif', '=', 'y')->get();
         $ruang = Ruang::where('aktif', '=', 'y')->get();
@@ -236,10 +239,10 @@ class PeminjamanController extends Controller
                 $userSeringPinjam[] = $userItem;
             }
         } else {
-            $history_peminjaman = Peminjaman::where('status', '=', 'SELESAI')->get();
+            $history_peminjaman = Peminjaman::orderBy('created_at', 'desc')->get();
         }
 
-        return view('peminjaman_data.history', [
+        return view('peminjaman_data_admin', [
             'history_peminjaman' => $history_peminjaman,
             'user' => $user,
             'kategori' => $kategori,
@@ -267,12 +270,12 @@ class PeminjamanController extends Controller
     {
         if (Auth::user()->status != 'ADMIN') {
             $user_id = Auth::user()->id;
-            $history_peminjaman = Peminjaman::where('user_id', '=', $user_id)->get();
+            $history_peminjaman = Peminjaman::where('user_id', '=', $user_id)->orderBy('created_at', 'desc')->get();
             $aset = Aset::where('aktif', '=', 'y')->get();
             $kategori = Kategori::where('aktif', '=', 'y')->get();
             $ruang = Ruang::where('aktif', '=', 'y')->get();
             $user = User::where('aktif', '=', 'y')->get();
-            return view('peminjaman_data.history-user', [
+            return view('peminjaman_data_user', [
                 'history_peminjaman' => $history_peminjaman,
                 'user' => $user,
                 'kategori' => $kategori,
@@ -280,7 +283,7 @@ class PeminjamanController extends Controller
                 'ruang' => $ruang
             ]);
         } else {
-            return redirect()->route('peminjaman.data');
+            return redirect()->route('peminjaman.admin-data');
         }
     }
 }
