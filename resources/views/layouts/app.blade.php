@@ -51,7 +51,7 @@
                                             <div>{{ Auth::user()->nama }}</div>
 
                                             <div class="ms-1 nav-link">
-                                                <img src="/images/adminProfile.png" alt="Profile Image" />
+                                                <img src="{{ asset('storage/' . Auth::user()->gambar) }}" alt="Profile Image" />
                                             </div>
                                         </button>
                                     </x-slot>

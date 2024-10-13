@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController
@@ -40,7 +41,7 @@ class ProfileController
             'no_telepon' => $request->no_telepon,
             'alamat' => $request->alamat,
             'status' => $request->status,
-            'divisi_id' => $request->divisi,
+            // 'divisi_id' => $request->divisi,
             'gambar' => $gambar,
             'email' => $request->email,
             'username' => strtolower($request->username),
@@ -64,29 +65,67 @@ class ProfileController
         return view('profile.edit', ['user' => $request->user()]);
     }
 
-    public function update(ProfileUpdateRequest $request, $id): RedirectResponse
-    {
-        $user = User::findOrFail($id);
+    public function update(Request $request, $id): RedirectResponse
+{
+    // Ambil user berdasarkan id
+    $user = User::findOrFail($id);
 
-        $gambar = $request->file('gambar') ? $request->file('gambar')->store('public/gambar_user') : null;
-        if ($gambar) {
-            $gambar = str_replace('public/', '', $gambar);
-        }
+    // Validasi input yang masuk
+    // $data = $request->validated();
 
-        $data = $request->validated() + ['updated_at' => now()];
-        $data['username'] = strtolower($request->username);
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
-        }
-        if ($gambar) {
-            $data['gambar'] = $gambar;
-        }
-
-        $user->update($data);
-
-        Alert::success('Success', 'User Berhasil Di Update!');
-        return redirect()->route('user.index');
+    // Cek jika name diubah, langsung assign ke variabel $data
+    if ($request->filled('nama')) {
+        $data['nama'] = $request->nama; // Pastikan mengambil 'name' bukan 'username'
     }
+
+    // Cek jika email diubah, langsung assign ke variabel $data
+    if ($request->filled('email')) {
+        $data['email'] = $request->email;
+    }
+
+    // Cek jika jenis kelamin diubah, langsung assign ke variabel $data
+    if ($request->filled('jenis_kelamin')) {
+        $data['jenis_kelamin'] = $request->jenis_kelamin;
+    }
+
+    // Cek jika no_telepon diubah, langsung assign ke variabel $data
+    if ($request->filled('no_telepon')) {
+        $data['no_telepon'] = $request->no_telepon;
+    }
+
+    // Cek jika alamat diubah, langsung assign ke variabel $data
+    if ($request->filled('alamat')) {
+        $data['alamat'] = $request->alamat;
+    }
+
+    // Cek jika gambar baru diupload, jika ya, simpan dan ganti gambar lama
+    if ($request->hasFile('gambar')) {
+        // Hapus gambar lama jika ada
+        if ($user->gambar) {
+            Storage::delete('public/' . $user->gambar);
+        }
+
+        // Simpan gambar baru
+        $gambarPath = $request->file('gambar')->store('gambar_user', 'public'); // Store directly in public
+        $user->gambar = str_replace('public/', '', $gambarPath); // Simpan path gambar baru
+    }
+
+    // Update waktu 'updated_at' secara otomatis
+    $data['updated_at'] = now();
+
+    // Debug input sebelum update
+    // dd($data);
+    
+    // Update user hanya dengan data yang telah diubah
+    $user->update($data);
+
+    // Kirim pesan sukses
+    Alert::success('Success', 'User Berhasil Di Update!');
+    return redirect()->route('profile.edit');
+}
+
+
+    
 
     public function destroy(Request $request, $id): RedirectResponse
     {
