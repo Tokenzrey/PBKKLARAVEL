@@ -41,5 +41,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/peminjaman', [PeminjamanController::class, 'index'])->middleware(CekSesi::class)->name('peminjaman.index');
+Route::post('/peminjaman/create', [PeminjamanController::class, 'store'])->middleware(CekSesi::class)->name('peminjaman.store');
 
 require __DIR__.'/auth.php';
