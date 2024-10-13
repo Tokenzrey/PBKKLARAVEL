@@ -99,11 +99,35 @@
                     <td>Alfred Rowe</td>
                     <td>Consulting</td>
                     <td>alfred@therowe.com</td>
+                    <td class="flex gap-4">
+                        <!-- Edit Button -->
+                        <a class="bg-blue-500 hover:bg-blue-600 text-white shadow rounded-full p-2 text-sm me-1"
+                            title="Edit">
+                            <x-heroicon-o-pencil-square class="w-[20px]" />
+                        </a>
+
+                        <!-- Delete Button -->
+                        <a class="bg-red-500 hover:bg-red-600 text-white shadow rounded-full p-2 text-sm">
+                            <x-heroicon-s-trash class="w-[20px]" />
+                        </a>
+                    </td>
                 </tr>
                 <tr data-id="2">
                     <td>Michael Ocansey</td>
                     <td>Engineering</td>
                     <td>mike@ocansey.com</td>
+                    <td class="flex gap-4">
+                        <!-- Edit Button -->
+                        <a class="bg-blue-500 hover:bg-blue-600 text-white shadow rounded-full p-2 text-sm me-1"
+                            title="Edit">
+                            <x-heroicon-o-pencil-square class="w-[20px]" />
+                        </a>
+
+                        <!-- Delete Button -->
+                        <a class="bg-red-500 hover:bg-red-600 text-white shadow rounded-full p-2 text-sm">
+                            <x-heroicon-s-trash class="w-[20px]" />
+                        </a>
+                    </td>
                 </tr>
             </x-bladewind::table>
         </section>
