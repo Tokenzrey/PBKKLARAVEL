@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CekSesi;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Middleware\CekUserAdminStatus;
 use App\Http\Controllers\AsetController;
 use App\Http\Controllers\DashboardController;
 
@@ -51,5 +52,10 @@ Route::put('/aset/update/{id}', [AsetController::class, 'update'])->middleware(C
 Route::get('/aset/delete/{id}', [AsetController::class, 'destroy'])->middleware(CekSesi::class)->name('aset.destroy');
 
 Route::get('/peminjaman', [PeminjamanController::class, 'index'])->middleware(CekSesi::class)->name('peminjaman.index');
+Route::post('/peminjaman/create', [PeminjamanController::class, 'store'])->middleware(CekSesi::class)->name('peminjaman.store');
+Route::get('/datapeminjaman', [PeminjamanController::class, 'history_peminjaman_user'])->middleware(CekSesi::class)->name('peminjaman.user-data');
+Route::get('/datapeminjaman/admin', [PeminjamanController::class, 'history_data_peminjaman'])->middleware(CekSesi::class, CekUserAdminStatus::class)->name('peminjaman.admin-data');
+Route::post('/peminjaman/update', [PeminjamanController::class, 'update'])->middleware(CekSesi::class)->name('peminjaman.update');
+Route::delete('/datapeminjaman/{id}', [PeminjamanController::class, 'destroy_history'])->middleware(CekSesi::class)->name('peminjaman.destroy');
 
 require __DIR__.'/auth.php';

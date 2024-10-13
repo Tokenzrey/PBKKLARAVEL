@@ -1,11 +1,11 @@
-<!-- <pre>{{ print_r($asets->toArray()) }}</pre>
-<pre>{{ print_r($kategori->toArray()) }}</pre>
+<!-- <pre>{{ print_r($asets->toArray()) }}</pre> -->
+<!-- <pre>{{ print_r($kategori->toArray()) }}</pre> -->
 
-<pre>{{ print_r(session()->all()) }}</pre> -->
-<!-- <pre>{{ print_r(Auth::user()->id) }}</pre>   -->
+<!-- <pre>{{ print_r(session()->all()) }}</pre> -->
+<!-- <pre>{{ print_r(Auth::user()->status) }}</pre>   -->
 
-@section('menunya')
-@if (session('userdata')['status'] == 'ADMIN')
+
+<!-- @if (Auth::user()->status == 'ADMIN')
     <h2>
         Transaksi <i class="fa fa-solid fa-arrow-right"></i> Peminjaman
     </h2>
@@ -13,16 +13,101 @@
 <h2>
     Peminjaman <i class="fa fa-solid fa-arrow-right"></i> Manual
 </h2>
-@endif
-@endsection
+@endif -->
 
-@section('content')
-    @php
-        $kat = old('kategori_id');
-        $rua = old('ruang_id');
-    @endphp
-    <div class="row">
-        <div class="col-md-6">
+@php
+    $kat = old('kategori_id');
+    $rua = old('ruang_id');
+@endphp
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peminjaman</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-container input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-container button {
+            background-color: #00a9e0;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .card .item-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .card .details {
+            margin: 15px 0;
+        }
+
+        .details a {
+            color: #00a9e0;
+            text-decoration: none;
+        }
+
+        .card button {
+            background-color: #00a9e0;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<x-app-layout>
+    <body>
+
+        <div class="search-container">
             <form action="" method="get">
                 <div class="input">
                     <div class="input-group mb-3">
@@ -32,101 +117,86 @@
                     </div>
                 </div>
             </form>
+
         </div>
-    </div>
-
-
-
-    <div class="row">
-        @foreach ($asets as $aset)
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title mb-1"><b>{{ $aset->nama }}</b></strong>
-                    </div>
-                    <div class="card-body">
-                        <div class="mx-auto d-block">
-                            <div class="img-blok" style="min-height: 150px">
-                                @if ($aset->gambar)
-                                    <img class="mx-auto d-block" src="{{ asset('storage/' . $aset->gambar) }}"
-                                        alt="" width="150px">
-                                @endif
-                            </div>
-                            <hr>
-                            <h5 class="text-sm-center mt-2 mb-1"></h5>
-                            <div class="location text-sm-left">
-                                <u>Kategori </u>{{ $aset->kategori->nama }} <br>
-                                <u>Lokasi </u>{{ $aset->ruang->nama }} <br>
-                                <u>Tempat </u>{{ $aset->tempat }}
-                            </div>
+        <div class="flex gap-4 gap-y-4 flex-wrap">
+        @foreach ($asets as $asset)
+            <div class="card">
+                <div class="item-title">{{ $asset -> nama }}</div>
+                <img src="images/{{ $asset->gambar}}" alt="Komputer Image">
+                <div class="details gap-2">
+                    <div class="flex gap-1">
+                        <div class="w-1/4 text-right text-cyan-500">
+                            <p >Kategori</p> 
                         </div>
-                        <hr>
-                        <div class="card-text text-sm-center text-center">
-                            <button type="button" data-id="{{ $aset->id }}" data-nama="{{ $aset->nama }}"
-                                class="btn btn-primary btn-block btn-peminjaman">Pinjam
-                            </button>
+                        <div class="w-3/4 text-left">
+                            <p >{{ $asset -> kategori_nama }}</p>
                         </div>
                     </div>
+                    <div class="flex gap-1">
+                        <div class="w-1/4 text-right text-cyan-500">
+                            <p >Lokasi</p> 
+                        </div>
+                        <div class="w-3/4 text-left">
+                            <p >{{ $asset -> ruang_nama }}</p>
+                        </div>
+                    </div>    
+                    <div class="flex gap-1">
+                        <div class="w-1/4 text-right text-cyan-500">
+                            <p >Tempat</p> 
+                        </div>
+                        <div class="w-3/4 text-left">
+                            <p >{{ $asset -> tempat }}</p>
+                        </div>
+                    </div> 
                 </div>
+
+                <!-- BladeWind button to open modal -->
+                <section>
+                    <x-bladewind::button onclick="showModal('form-modal')">Pinjam</x-bladewind::button>
+                    <!-- Modal form to post data -->
+                    <x-bladewind::modal name="form-modal" title="Pinjam Barang" ok_button_label="Pinjam" close_after_action="false"
+                        ok_button_action="submitForm()">
+                        <!-- Form starts here -->
+                        <form action="{{ route('peminjaman.store') }}" method="POST" class="profile-form" id="peminjaman-form">
+                            @csrf
+                            <x-bladewind::input name="tanggal_pinjam" label="Tanggal Peminjaman" required="true" type="date"/>
+                            <x-bladewind::input name="keperluan" label="Keperluan" required="true" />
+                            <input type="hidden" name="aset_id" value="{{ $asset->id }}">
+                            <button type="submit" class="hidden-submit-button hidden" style="">Pinjam</button>
+                        </form>
+                    </x-bladewind::modal>
+                </section>
             </div>
         @endforeach
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                {{ $asets->links() }}
-            </ul>
-        </nav>
-    </div>
-
-    <!-- Center modal tambah data -->
-    <div class="modal fade modal" id="peminjamanModal" tabindex="-1" aria-labelledby="peminjamanModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <img src="{{ asset('simas/images/inventory.png') }}" alt="" width="70px">
-                    <h5 class="modal-title" id="peminjamanModalLabel">Form Peminjaman</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('peminjaman.store') }}" method="post" id="form-peminjaman">
-                        @csrf
-                        <input type="hidden" name="aset_id" value="">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="nama"><b>Nama Aset</b></label>
-                                    <input type="text" class="form-control" id="nama" placeholder="Nama Aset"
-                                        name="nama" readonly required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-12 mt-2">
-                                    <label for="tanggal_pinjam"><b>Tanggal Peminjaman</b></label>
-                                    <input type="date" class="form-control" id="tanggal_pinjam"
-                                        placeholder="Tanggal Pinjam" name="tanggal_pinjam" required>
-                                </div>
-                            </div>
-                            <div class="row">
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-12 mt-2">
-                                    <label for="keperluan"><b>Keperluan</b></label>
-                                    <textarea name="keperluan" id="keperluan" cols="30" rows="5" class="form-control"
-                                        placeholder="Keperluan" name="keperluan" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer border-top-0 d-flex mt-2">
-                            <button type="button" class="btn btn-danger light text-center"
-                                data-bs-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-primary btn-pinjam-aset">Pinjam Aset</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
-    </div>
-@endsection
+    </body>
 
-@section(' footer')
-@endsection
+    <!-- JavaScript to handle the modal form submission -->
+    <script>
+        function submitForm() {
+            if (validateForm('.profile-form')) {
+                // Submit the form
+                document.getElementById('peminjaman-form').submit();
+            } else {
+                alert('Please fill all required fields.');
+            }
+        }
+
+        @if ($errors->any())
+            // Convert PHP array to a JavaScript array
+            var errors = @json($errors->all());
+
+            // Loop through the errors and display them
+            errors.forEach(function(error) {
+                alert(error);
+            });
+        @endif
+    </script>
+</x-app-layout>
+</html>
+
+
+ 
+
+
