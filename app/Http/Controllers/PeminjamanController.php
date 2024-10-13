@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PeminjamanController extends Controller
 {
@@ -37,25 +38,54 @@ class PeminjamanController extends Controller
         //     ->orderBy('peminjaman.created_at', 'desc')
         //     ->distinct()
         //     ->paginate(6);
+
+        // $aset = DB::table('aset')
+        //     ->join('kategori', 'kategori.id', '=', 'aset.kategori_id')
+        //     ->join('ruang', 'ruang.id', '=', 'aset.ruang_id')
+        //     ->leftJoin('peminjaman', 'aset.id', '=', 'peminjaman.aset_id')
+        //     ->where(function($query) {
+        //         $query->where('peminjaman.status', '!=', 'DITERIMA')
+        //             ->orWhereNull('peminjaman.status'); // Include assets with no related peminjaman
+        //     })
+        //     ->select('aset.id', 'aset.nama', 'aset.tempat', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama', 'peminjaman.status', 'peminjaman.created_at')
+        //     ->get();
+
+        $assetIdsWithPeminjaman = Peminjaman::where('status', 'DITERIMA')
+                ->pluck('aset_id');
+
         $aset = Aset::join('kategori', 'kategori.id', '=', 'aset.kategori_id')
-            ->join('ruang', 'ruang.id', '=', 'aset.ruang_id')
-            ->leftJoin('peminjaman', function ($join) {
-                $join->on('peminjaman.aset_id', '=', 'aset.id')
-                    ->where('peminjaman.status', '!=', 'DITERIMA');
-            })
-            ->where(function ($query) use ($keyword_search) {
-                $query->where('aset.nama', 'like', '%' . strtolower($keyword_search) . '%')
-                    ->orWhere('aset.tempat', 'like', '%' . strtolower($keyword_search) . '%')
-                    ->orWhere('kategori.nama', 'like', '%' . strtolower($keyword_search) . '%')
-                    ->orWhere('ruang.nama', 'like', '%' . strtolower($keyword_search) . '%');
-            })
-            ->where('aset.aktif', '=', 'y')
-            ->select('aset.id', 'aset.nama', 'aset.tempat', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama', 'peminjaman.status', 'peminjaman.created_at')
-            // ->groupBy('aset.id') // Group by asset ID to ensure unique results
-            ->orderBy('aset.id', 'asc')
-            ->orderBy('peminjaman.created_at', 'desc')
-            ->distinct()
-            ->paginate(6);
+                ->join('ruang', 'ruang.id', '=', 'aset.ruang_id')
+                ->where(function ($query) use ($keyword_search) {
+                            $query->where('aset.nama', 'like', '%' . strtolower($keyword_search) . '%')
+                                ->orWhere('aset.tempat', 'like', '%' . strtolower($keyword_search) . '%')
+                                ->orWhere('kategori.nama', 'like', '%' . strtolower($keyword_search) . '%')
+                                ->orWhere('ruang.nama', 'like', '%' . strtolower($keyword_search) . '%');
+                })
+                ->whereNotIn('aset.id', $assetIdsWithPeminjaman)
+                ->where('aset.aktif', '=', 'y') // Include only active assets
+                ->select('aset.id', 'aset.nama', 'aset.tempat', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama')
+                ->orderBy('aset.id', 'asc')
+                ->paginate(6);
+
+        // $aset = Aset::join('kategori', 'kategori.id', '=', 'aset.kategori_id')
+        //     ->join('ruang', 'ruang.id', '=', 'aset.ruang_id')
+        //     ->leftJoin('peminjaman', function ($join) {
+        //         $join->on('peminjaman.aset_id', '=', 'aset.id')
+        //             ->where('peminjaman.status', '!=', 'DITERIMA');
+        //     })
+        //     ->where(function ($query) use ($keyword_search) {
+        //         $query->where('aset.nama', 'like', '%' . strtolower($keyword_search) . '%')
+        //             ->orWhere('aset.tempat', 'like', '%' . strtolower($keyword_search) . '%')
+        //             ->orWhere('kategori.nama', 'like', '%' . strtolower($keyword_search) . '%')
+        //             ->orWhere('ruang.nama', 'like', '%' . strtolower($keyword_search) . '%');
+        //     })
+        //     ->where('aset.aktif', '=', 'y')
+        //     ->select('aset.id', 'aset.nama', 'aset.tempat', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama', 'peminjaman.status', 'peminjaman.created_at')
+        //     // ->groupBy('aset.id') // Group by asset ID to ensure unique results
+        //     ->orderBy('aset.id', 'asc')
+        //     ->orderBy('peminjaman.created_at', 'desc')
+        //     ->distinct()
+        //     ->paginate(6);
 
         $kategori = Kategori::where('aktif', '=', 'y')->get();
         return view('peminjaman', [
@@ -93,7 +123,7 @@ class PeminjamanController extends Controller
                 $query->where('aktif', 'y');
             })
             ->first();
-
+        
         Peminjaman::create([
             'aset_id' => $aset_id,
             'user_id' => $user,
