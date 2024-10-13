@@ -24,16 +24,16 @@ class AsetController
         $ruang = Ruang::where('aktif', 'y')->get();
         $vendor = Vendor::where('aktif', 'y')->get();
 
-        $maintenance = Aset::getMaintenanceTime($aset);
-        foreach ($aset as $value) {
-            $value->is_maintenance_time = false;
-            foreach ($maintenance as $value_maintenance) {
-                if ($value->id == $value_maintenance->id) {
-                    $value->is_maintenance_time = $value_maintenance->is_maintenance_time;
-                }
-            }
-        }
-        return view('aset.index', compact('aset', 'kategori', 'jenis_pemeliharaan', 'ruang', 'vendor'));
+        // $maintenance = Aset::getMaintenanceTime($aset);
+        // foreach ($aset as $value) {
+        //     $value->is_maintenance_time = false;
+        //     foreach ($maintenance as $value_maintenance) {
+        //         if ($value->id == $value_maintenance->id) {
+        //             $value->is_maintenance_time = $value_maintenance->is_maintenance_time;
+        //         }
+        //     }
+        // }
+        return view('aset.tabelAset', compact('aset', 'kategori', 'jenis_pemeliharaan', 'ruang', 'vendor'));
     }
 
     public function store(Request $request)
