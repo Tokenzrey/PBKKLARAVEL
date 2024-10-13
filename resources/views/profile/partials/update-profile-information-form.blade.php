@@ -13,16 +13,18 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
+        <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
+        <!-- Email -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
@@ -47,6 +49,45 @@
             @endif
         </div>
 
+        <!-- Jenis Kelamin -->
+        <div>
+            <x-input-label for="jenis_kelamin" :value="__('Jenis Kelamin')" />
+            <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <option value="L" {{ old('jenis_kelamin', $user->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                <option value="P" {{ old('jenis_kelamin', $user->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('jenis_kelamin')" />
+        </div>
+
+        <!-- No Telepon -->
+        <div>
+            <x-input-label for="no_telepon" :value="__('No Telepon')" />
+            <x-text-input id="no_telepon" name="no_telepon" type="text" class="mt-1 block w-full" :value="old('no_telepon', $user->no_telepon)" required autocomplete="tel" />
+            <x-input-error class="mt-2" :messages="$errors->get('no_telepon')" />
+        </div>
+
+        <!-- Alamat -->
+        <div>
+            <x-input-label for="alamat" :value="__('Alamat')" />
+            <textarea id="alamat" name="alamat" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" required>{{ old('alamat', $user->alamat) }}</textarea>
+            <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
+        </div>
+    
+
+        <!-- Gambar -->
+        <div>
+            <x-input-label for="gambar" :value="__('Gambar Profil')" />
+            <input type="file" id="gambar" name="gambar" class="block mt-1 w-full">
+            <x-input-error class="mt-2" :messages="$errors->get('gambar')" />
+
+            @if ($user->gambar)
+                <div class="mt-2">
+                    <img src="{{ asset('storage/' . $user->gambar) }}" alt="Profile Picture" class="w-20 h-20 rounded-full">
+                </div>
+            @endif
+        </div>
+
+        <!-- Save Button -->
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
