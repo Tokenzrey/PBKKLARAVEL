@@ -81,7 +81,7 @@
             </div>
         </div>
 
-        <div class="dlabnav">
+        <div class="dlabnav !fixed">
             <div class="dlabnav-scroll ps">
                 {{-- sidebar --}}
                 <div class="sidebar-user text-center">
