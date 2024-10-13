@@ -24,6 +24,7 @@
         </div>
 
         <!-- Email -->
+        <!-- Email -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full focus:ring-[#00B5DA] focus:border-[#00B5DA]" :value="old('email', $user->email)" required autocomplete="username" />
