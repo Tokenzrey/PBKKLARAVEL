@@ -157,11 +157,9 @@
                     <!-- Modal form to post data -->
                     <x-bladewind::modal name="form-modal" title="Pinjam Barang" ok_button_label="Pinjam" close_after_action="false"
                         ok_button_action="submitForm()">
-                        
                         <!-- Form starts here -->
                         <form action="{{ route('peminjaman.store') }}" method="POST" class="profile-form" id="peminjaman-form">
-                            @csrf <!-- CSRF protection -->
-                            <!-- Example fields, modify as needed -->
+                            @csrf
                             <x-bladewind::input name="tanggal_pinjam" label="Tanggal Peminjaman" required="true" type="date"/>
                             <x-bladewind::input name="keperluan" label="Keperluan" required="true" />
                             <input type="hidden" name="aset_id" value="{{ $asset->id }}">
@@ -184,6 +182,16 @@
                 alert('Please fill all required fields.');
             }
         }
+
+        @if ($errors->any())
+            // Convert PHP array to a JavaScript array
+            var errors = @json($errors->all());
+
+            // Loop through the errors and display them
+            errors.forEach(function(error) {
+                alert(error);
+            });
+        @endif
     </script>
 </x-app-layout>
 </html>

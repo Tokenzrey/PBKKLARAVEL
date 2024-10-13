@@ -50,18 +50,31 @@ class PeminjamanController extends Controller
         //     ->select('aset.id', 'aset.nama', 'aset.tempat', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama', 'peminjaman.status', 'peminjaman.created_at')
         //     ->get();
 
-        $assetIdsWithPeminjaman = Peminjaman::where('status', 'DITERIMA')
-                ->pluck('aset_id');
+        // $assetIdsWithPeminjaman = Peminjaman::where('status', 'DITERIMA')
+        //         ->pluck('aset_id');
+
+        // $aset = Aset::join('kategori', 'kategori.id', '=', 'aset.kategori_id')
+        //         ->join('ruang', 'ruang.id', '=', 'aset.ruang_id')
+        //         ->where(function ($query) use ($keyword_search) {
+        //                     $query->where('aset.nama', 'like', '%' . strtolower($keyword_search) . '%')
+        //                         ->orWhere('aset.tempat', 'like', '%' . strtolower($keyword_search) . '%')
+        //                         ->orWhere('kategori.nama', 'like', '%' . strtolower($keyword_search) . '%')
+        //                         ->orWhere('ruang.nama', 'like', '%' . strtolower($keyword_search) . '%');
+        //         })
+        //         ->whereNotIn('aset.id', $assetIdsWithPeminjaman)
+        //         ->where('aset.aktif', '=', 'y') // Include only active assets
+        //         ->select('aset.id', 'aset.nama', 'aset.tempat', 'aset.gambar', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama')
+        //         ->orderBy('aset.id', 'asc')
+        //         ->get();
 
         $aset = Aset::join('kategori', 'kategori.id', '=', 'aset.kategori_id')
                 ->join('ruang', 'ruang.id', '=', 'aset.ruang_id')
                 ->where(function ($query) use ($keyword_search) {
-                            $query->where('aset.nama', 'like', '%' . strtolower($keyword_search) . '%')
-                                ->orWhere('aset.tempat', 'like', '%' . strtolower($keyword_search) . '%')
-                                ->orWhere('kategori.nama', 'like', '%' . strtolower($keyword_search) . '%')
-                                ->orWhere('ruang.nama', 'like', '%' . strtolower($keyword_search) . '%');
+                    $query->where('aset.nama', 'like', '%' . strtolower($keyword_search) . '%')
+                        ->orWhere('aset.tempat', 'like', '%' . strtolower($keyword_search) . '%')
+                        ->orWhere('kategori.nama', 'like', '%' . strtolower($keyword_search) . '%')
+                        ->orWhere('ruang.nama', 'like', '%' . strtolower($keyword_search) . '%');
                 })
-                ->whereNotIn('aset.id', $assetIdsWithPeminjaman)
                 ->where('aset.aktif', '=', 'y') // Include only active assets
                 ->select('aset.id', 'aset.nama', 'aset.tempat', 'aset.gambar', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama')
                 ->orderBy('aset.id', 'asc')
@@ -110,6 +123,7 @@ class PeminjamanController extends Controller
     {
         $aset_id = $request->aset_id;
         $user = Auth::user()->id;
+        $tanggal_pinjam = $request->tanggal_pinjam;
 
         $aset = Aset::find($aset_id);
 
@@ -119,15 +133,20 @@ class PeminjamanController extends Controller
 
         $peminjaman = Peminjaman::where('aset_id', $aset_id)
             ->where('status', 'DITERIMA')
+            ->where('tanggal_pinjam', $tanggal_pinjam)
             ->whereHas('aset', function ($query) {
                 $query->where('aktif', 'y');
             })
             ->first();
         
+        if($peminjaman) {
+            return redirect()->back()->withErrors(['error' => 'Aset sudah dipinjam pada tanggal tersebut!']);
+        }
+
         Peminjaman::create([
             'aset_id' => $aset_id,
             'user_id' => $user,
-            'tanggal_pinjam' => $request->tanggal_pinjam,
+            'tanggal_pinjam' => $tanggal_pinjam,
             'keperluan' => $request->keperluan
         ]);
 
@@ -263,7 +282,7 @@ class PeminjamanController extends Controller
         }
         $peminjaman->where(['id' => $id])->delete();
         Alert::success('Success', 'Data dari history peminjaman Berhasil Dihapus | Data tidak bisa Dikembalikan');
-        return redirect()->route('peminjaman.data');
+        return redirect()->route('peminjaman.user-data');
     }
 
     public function history_peminjaman_user()

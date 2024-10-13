@@ -8,8 +8,8 @@
         <x-slot name="header">
             <th>No</th>
             <th>Status</th>
-            <th>Tanggal Diajukan</th>
-            <th>Nama</th>
+            <th>Waktu Diajukan</th>
+            <th>Nama Aset (ID)</th>
             <th>Kategori</th>
             <th>Tanggal Pinjam</th>
             <th>Keperluan</th>
@@ -36,11 +36,21 @@
                         {{ $peminjaman->status }}
                     </div>
                 </td>
-                <td>{{ date('d F Y', strtotime($peminjaman->created_at)) }}</td>
+                <td>{{ date('d F Y, H:i', strtotime($peminjaman->created_at)) }}</td>
                 <td>{{ $peminjaman->aset->nama }}</td>
-                <td>{{ $peminjaman->aset->kategori->nama }}</td>
+                <td>{{ $peminjaman->aset->nama }} ({{ $peminjaman->aset->id }})</td>
                 <td>{{ date('d F Y', strtotime($peminjaman->tanggal_pinjam)) }}</td>
                 <td>{{ $peminjaman->keperluan }}</td>
+                <td>
+                    <form action="{{ route('peminjaman.destroy', $peminjaman->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-600">
+                            <x-icon name="heroicon-s-trash" class="h-6"/>
+                            Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </x-bladewind::table>

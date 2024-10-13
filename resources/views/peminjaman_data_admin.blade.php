@@ -59,6 +59,16 @@
                 <td>{{ $peminjaman->aset->kategori->nama }}</td>
                 <td>{{ date('d F Y', strtotime($peminjaman->tanggal_pinjam)) }}</td>
                 <td>{{ $peminjaman->keperluan }}</td>
+                <td>
+                    <form action="{{ route('peminjaman.destroy', $peminjaman->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-600">
+                            <x-icon name="heroicon-s-trash" class="h-6"/>
+                            Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </x-bladewind::table>
