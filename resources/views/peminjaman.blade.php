@@ -124,10 +124,31 @@
             <div class="card">
                 <div class="item-title">{{ $asset -> nama }}</div>
                 <img src="images/{{ $asset->gambar}}" alt="Komputer Image">
-                <div class="details">
-                    <p><a href="#">Kategori</a> {{ $asset -> kategori_nama }}</p>
-                    <p><a href="#">Lokasi</a> {{ $asset -> ruang_nama }}</p>
-                    <p><a href="#">Tempat</a> {{ $asset -> tempat }}</p>
+                <div class="details gap-2">
+                    <div class="flex gap-1">
+                        <div class="w-1/4 text-right text-cyan-500">
+                            <p >Kategori</p> 
+                        </div>
+                        <div class="w-3/4 text-left">
+                            <p >{{ $asset -> kategori_nama }}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-1">
+                        <div class="w-1/4 text-right text-cyan-500">
+                            <p >Lokasi</p> 
+                        </div>
+                        <div class="w-3/4 text-left">
+                            <p >{{ $asset -> ruang_nama }}</p>
+                        </div>
+                    </div>    
+                    <div class="flex gap-1">
+                        <div class="w-1/4 text-right text-cyan-500">
+                            <p >Tempat</p> 
+                        </div>
+                        <div class="w-3/4 text-left">
+                            <p >{{ $asset -> tempat }}</p>
+                        </div>
+                    </div> 
                 </div>
 
                 <!-- BladeWind button to open modal -->
