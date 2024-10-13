@@ -63,9 +63,9 @@ class PeminjamanController extends Controller
                 })
                 ->whereNotIn('aset.id', $assetIdsWithPeminjaman)
                 ->where('aset.aktif', '=', 'y') // Include only active assets
-                ->select('aset.id', 'aset.nama', 'aset.tempat', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama')
+                ->select('aset.id', 'aset.nama', 'aset.tempat', 'aset.gambar', 'kategori.nama as kategori_nama', 'ruang.nama as ruang_nama')
                 ->orderBy('aset.id', 'asc')
-                ->paginate(6);
+                ->get();
 
         // $aset = Aset::join('kategori', 'kategori.id', '=', 'aset.kategori_id')
         //     ->join('ruang', 'ruang.id', '=', 'aset.ruang_id')
@@ -85,7 +85,7 @@ class PeminjamanController extends Controller
         //     ->orderBy('aset.id', 'asc')
         //     ->orderBy('peminjaman.created_at', 'desc')
         //     ->distinct()
-        //     ->paginate(6);
+        //     ->get();
 
         $kategori = Kategori::where('aktif', '=', 'y')->get();
         return view('peminjaman', [

@@ -119,10 +119,11 @@
             </form>
 
         </div>
+        <div class="flex gap-4 gap-y-4 flex-wrap">
         @foreach ($asets as $asset)
             <div class="card">
                 <div class="item-title">{{ $asset -> nama }}</div>
-                <img src="https://via.placeholder.com/300x200" alt="Komputer Image">
+                <img src="images/{{ $asset->gambar}}" alt="Komputer Image">
                 <div class="details">
                     <p><a href="#">Kategori</a> {{ $asset -> kategori_nama }}</p>
                     <p><a href="#">Lokasi</a> {{ $asset -> ruang_nama }}</p>
@@ -143,12 +144,13 @@
                             <x-bladewind::input name="tanggal_pinjam" label="Tanggal Peminjaman" required="true" type="date"/>
                             <x-bladewind::input name="keperluan" label="Keperluan" required="true" />
                             <input type="hidden" name="aset_id" value="{{ $asset->id }}">
-                            <button type="submit" class="hidden-submit-button" style="display: none;">Pinjam</button>
+                            <button type="submit" class="hidden-submit-button hidden" style="">Pinjam</button>
                         </form>
                     </x-bladewind::modal>
                 </section>
             </div>
         @endforeach
+        </div>
     </body>
 
     <!-- JavaScript to handle the modal form submission -->
