@@ -78,126 +78,125 @@
                 <td>{{ $asset->kondisi }}</td>
                 <td>{{ $asset->tempat }}</td>
                 <td>
-                    <x-icon-link icon="heroicon-s-eye" name="tampilkan_detail" 
+                    <x-icon-link icon="heroicon-s-eye" name="tampilkan_detail"
                                 href="{{ route('aset.show', ['id' => $asset->id]) }}" />
-                    
+
                     <!-- Trigger Modal -->
-                    <x-icon-button icon="heroicon-m-pencil-square" 
+                    <x-icon-button icon="heroicon-m-pencil-square"
                                 onclick="showModal('edit-asset-{{ $asset->id }}')" />
 
                     <!-- Modal for Each Asset -->
-                    <x-bladewind::modal name="edit-asset-{{ $asset->id }}" 
-                                        title="Edit Asset" 
-                                        ok_button_label="Save" 
-                                        close_after_action="false" 
-                                        class="w-1/2" 
+                    <x-bladewind::modal name="edit-asset-{{ $asset->id }}"
+                                        title="Edit Asset"
+                                        ok_button_label="Save"
+                                        okButtonAction="document.getElementById('send-asset-form-{{ $asset->id }}').submit();"
+                                        close_after_action="true"
+                                        class="w-1/2"
                                         size="xl">
-                        <form class="profile-form" 
-                            action="{{ route('aset.update', $asset->id) }}" 
-                            method="POST" 
+                        <form id="send-asset-form-{{ $asset->id }}" class="profile-form"
+                            action="{{ route('aset.update', $asset->id) }}"
+                            method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            
-                            <x-bladewind::input name="kode_edit_{{ $asset->id }}" 
-                                                label="Kode" 
+
+                            <x-bladewind::input name="kode_edit_{{ $asset->id }}"
+                                                label="Kode"
                                                 value="{{ $asset->kode }}" />
 
-                            <x-bladewind::input name="nama_penerima_edit_{{ $asset->id }}" 
+                            <x-bladewind::input name="nama_penerima_edit_{{ $asset->id }}"
                                                 label="Nama Penerima"
-                                                value="{{ $asset->nama_penerima }}" 
-                                                required="true" 
+                                                value="{{ $asset->nama_penerima }}"
+                                                required="true"
                                                 placeholder="Masukkan nama" />
 
                             <div class="grid grid-cols-2 gap-4">
-                                <x-bladewind::dropdown placeholder="Pilih Vendor" 
+                                <x-bladewind::dropdown placeholder="Pilih Vendor"
                                                         name="vendor_id_edit_{{ $asset->id }}"
-                                                        selected_value="{{ $asset->vendor_id }}" 
-                                                        label="Vendor" 
-                                                        label_key="nama" 
-                                                        value_key="id" 
-                                                        required="true" 
+                                                        selected_value="{{ $asset->vendor_id }}"
+                                                        label="Vendor"
+                                                        label_key="nama"
+                                                        value_key="id"
+                                                        required="true"
                                                         :data="$vendor" />
 
-                                <x-bladewind::input type="date" 
+                                <x-bladewind::input type="date"
                                                     name="tanggal_pembelian_edit_{{ $asset->id }}"
-                                                    value="{{ $asset->tanggal_pembelian }}" 
-                                                    label="Tanggal Pembelian" 
+                                                    value="{{ $asset->tanggal_pembelian }}"
+                                                    label="Tanggal Pembelian"
                                                     required="true" />
                             </div>
 
                             <x-bladewind::input name="nama_edit_{{ $asset->id }}"
-                                                value="{{ $asset->nama}}" 
-                                                label="Nama Aset" 
+                                                value="{{ $asset->nama}}"
+                                                label="Nama Aset"
                                                 required="true" />
 
-                            <x-bladewind::input type="file" 
+                            <x-bladewind::input type="file"
                                                 name="gambar_edit_{{ $asset->id }}"
-                                                value="{{ $asset->gambar }}" 
+                                                value="{{ $asset->gambar }}"
                                                 label="Gambar Aset" />
 
                             <div class="grid grid-cols-2 gap-4">
-                                <x-bladewind::input name="brand_edit_{{ $asset->id }}" 
+                                <x-bladewind::input name="brand_edit_{{ $asset->id }}"
                                                     label="Brand"
-                                                    value="{{ $asset->brand }}" 
-                                                    required="true" 
+                                                    value="{{ $asset->brand }}"
+                                                    required="true"
                                                     placeholder="Masukkan Brand Aset" />
 
-                                <x-bladewind::dropdown placeholder="Pilih Jenis Pemeliharaan" 
-                                                        name="jenis_pemeliharaan_id_edit_{{ $asset->id }}" 
+                                <x-bladewind::dropdown placeholder="Pilih Jenis Pemeliharaan"
+                                                        name="jenis_pemeliharaan_id_edit_{{ $asset->id }}"
                                                         label="Jenis Pemeliharaan"
-                                                        selected_value="{{ $asset->jenis_pemeliharaan_id }}" 
-                                                        label_key="nama" 
-                                                        value_key="id" 
-                                                        required="true" 
+                                                        selected_value="{{ $asset->jenis_pemeliharaan_id }}"
+                                                        label_key="nama"
+                                                        value_key="id"
+                                                        required="true"
                                                         :data="$jenis_pemeliharaan" />
                             </div>
 
                             <div class="grid grid-cols-2 gap-4">
-                                <x-bladewind::dropdown placeholder="Pilih Lokasi" 
-                                                        name="ruang_id_edit_{{ $asset->id }}" 
+                                <x-bladewind::dropdown placeholder="Pilih Lokasi"
+                                                        name="ruang_id_edit_{{ $asset->id }}"
                                                         label="Lokasi"
-                                                        selected_value="{{ $asset->ruang_id }}" 
-                                                        label_key="nama" 
-                                                        value_key="id" 
-                                                        required="true" 
+                                                        selected_value="{{ $asset->ruang_id }}"
+                                                        label_key="nama"
+                                                        value_key="id"
+                                                        required="true"
                                                         :data="$ruang" />
 
-                                <x-bladewind::dropdown placeholder="Pilih Kategori Aset" 
-                                                        name="kategori_id_edit_{{ $asset->id }}" 
+                                <x-bladewind::dropdown placeholder="Pilih Kategori Aset"
+                                                        name="kategori_id_edit_{{ $asset->id }}"
                                                         label="Kategori Aset"
-                                                        selected_value="{{ $asset->kategori_id }}" 
+                                                        selected_value="{{ $asset->kategori_id }}"
                                                         label_key="nama"
-                                                        value_key="id" 
-                                                        required="true" 
+                                                        value_key="id"
+                                                        required="true"
                                                         :data="$kategori" />
                             </div>
 
                             <div class="grid grid-cols-2 gap-4">
-                                <x-bladewind::input name="tempat_edit_{{ $asset->id }}" 
+                                <x-bladewind::input name="tempat_edit_{{ $asset->id }}"
                                                     label="Penempatan Aset"
-                                                    value="{{ $asset->tempat }}" 
-                                                    required="true" 
+                                                    value="{{ $asset->tempat }}"
+                                                    required="true"
                                                     placeholder="Masukkan Penempatan Aset" />
 
-                                <x-bladewind::input name="kondisi_edit_{{ $asset->id }}" 
+                                <x-bladewind::input name="kondisi_edit_{{ $asset->id }}"
                                                     label="Kondisi Aset"
-                                                    value="{{ $asset->kondisi }}" 
-                                                    required="true" 
+                                                    value="{{ $asset->kondisi }}"
+                                                    required="true"
                                                     placeholder="Masukkan Kondisi Aset" />
                             </div>
 
-                            <x-bladewind::input name="deskripsi_edit_{{ $asset->id }}" 
+                            <x-bladewind::input name="deskripsi_edit_{{ $asset->id }}"
                                                 label="Deskripsi Aset"
-                                                value="{{ $asset->deskripsi }}" 
-                                                required="true" 
+                                                value="{{ $asset->deskripsi }}"
+                                                required="true"
                                                 placeholder="Masukkan Serial Number Aset" />
-
-                            <button type="submit" class="btn btn-primary">Save</button>
                         </form>
                     </x-bladewind::modal>
 
-                    <x-icon-link icon="heroicon-s-trash" name="hapus_data" 
+                    <x-icon-link icon="heroicon-s-trash" name="hapus_data"
                                 href="{{ route('aset.destroy', ['id' => $asset->id]) }}" />
                 </td>
             </tr>

@@ -138,10 +138,8 @@
 
 .header {
     height: 7.5rem;
-    z-index: 1;
     position: relative;
     padding: 0rem;
-    z-index: 3;
     padding-left: 20.563rem;
     padding-top: 0rem;
     transition: all 0.2s ease;
@@ -699,7 +697,6 @@
 .content-body {
     position: relative;
     margin-left: 16rem;
-    z-index: 0;
     transition: all 0.2s ease;
 }
 .content-body .container-fluid, .content-body .container-sm, .content-body .container-md, .content-body .container-lg, .content-body .container-xl, .content-body .container-xxl {
