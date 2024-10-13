@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="header border-b-neutral-40 !h-[80px]">
+        <div class="header border-b-neutral-40 !h-[80px] fixed bg-neutral-10">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="navbar-collapse justify-end">
@@ -180,7 +180,7 @@
             </div>
         </div>
 
-        <div class="content-body">
+        <div class="content-body mt-20">
             <!-- row -->
             <div class="container-fluid">
                 {{ $slot }}
