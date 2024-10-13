@@ -41,7 +41,7 @@ class ProfileController
             'no_telepon' => $request->no_telepon,
             'alamat' => $request->alamat,
             'status' => $request->status,
-            'divisi_id' => $request->divisi,
+            // 'divisi_id' => $request->divisi,
             'gambar' => $gambar,
             'email' => $request->email,
             'username' => strtolower($request->username),

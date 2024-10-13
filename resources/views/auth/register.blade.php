@@ -9,6 +9,23 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!-- Jenis Kelamin -->
+        <div class="mt-4">
+            <x-input-label for="jenis_kelamin" :value="__('Jenis Kelamin')" />
+            <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#00B5DA] focus:border-[#00B5DA]">
+                <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('jenis_kelamin')" />
+        </div>
+
+        <!-- No Telepon -->
+        <div class="mt-4">
+            <x-input-label for="no_telepon" :value="__('No Telepon')" />
+            <x-text-input id="no_telepon" name="no_telepon" type="text" class="mt-1 block w-full focus:ring-[#00B5DA] focus:border-[#00B5DA]" :value="old('no_telepon')" required autocomplete="tel" />
+            <x-input-error class="mt-2" :messages="$errors->get('no_telepon')" />
+        </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
@@ -44,7 +61,7 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4" style="background-color: #00B4D8;">
+            <x-primary-button class="ms-4 rounded-lg focus:!ring-[#00B3D6] focus:!border-[#00B3D6]" style="background-color: #00B4D8;">
                 {{ __('Register') }}
             </x-primary-button>
         </div>
