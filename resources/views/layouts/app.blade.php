@@ -25,7 +25,7 @@
 <body class="font-sans antialiased">
     <div id="main-wrapper" class="show min-h-screen">
         {{-- @include('layouts.navigation') --}}
-        <div class="nav-header text-center !h-[80px]">
+        <div class="nav-header text-center !h-[80px] z-30">
             <div class="brand-title">
                 <br>
                 <h5><b>Management Asset App</b></h5>
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="header border-b-neutral-40 !h-[80px] fixed bg-neutral-10">
+        <div class="header border-b-neutral-40 !h-[80px] fixed bg-neutral-10 z-20">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="navbar-collapse justify-end">
@@ -96,7 +96,7 @@
                 <ul class="metismenu" id="menu">
                     @if (Auth::user()->status === 'ADMIN')
                     <li class="mm-active">
-                        <a href="/">
+                        <a href="{{ route('dashboard.admin') }}">
                             <x-heroicon-s-home class="icon" />
                             <span class="nav-text">Dashboard</span>
                         </a>
@@ -129,12 +129,12 @@
                         </ul>
                     </li>
                     @else
-                    <li><a href="/">
+                    <li><a href="{{ route('dashboard.admin') }}">
                             <x-heroicon-s-home class="icon" />
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
-                    <li><a href="/">
+                    <li><a href="{{ route('peminjaman.index') }}">
                             <x-heroicon-m-shopping-cart class="icon" />
                             <span class="nav-text">Peminjaman Manual</span>
                         </a>
@@ -161,21 +161,12 @@
                             <span class="nav-text">Transaksi</span>
                         </a>
                         <ul aria-expanded="false" class="mm-collapse">
-                            <li><a href="/">Peminjaman</a></li>
-                            <li><a href="/">Data Peminjaman</a></li>
+                            <li><a href="{{ route('peminjaman.index') }}">Peminjaman</a></li>
+                            <li><a href="{{ route('peminjaman.user-data') }}">Data Peminjaman</a></li>
                             {{-- <li><a href="/">History Peminjaman</a></li> --}}
                         </ul>
                     </li>
                     @endif
-
-                    {{-- @if ({{ Auth::user()->status }} == 'ADMIN') --}}
-                    {{-- <li><a href="/">
-                            <i class="fa fa-file"></i>
-                            <span class="nav-text">Report</span>
-                        </a>
-                    </li> --}}
-                    {{-- @endif --}}
-
                 </ul>
             </div>
         </div>
