@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CekUserAdminStatus
 {
@@ -16,7 +17,7 @@ class CekUserAdminStatus
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session('userdata')['status'] == 'ADMIN') {
+        if (Auth::user()->status == 'ADMIN') {
             return $next($request);
         }
         return redirect()->route('dashboard.user');
