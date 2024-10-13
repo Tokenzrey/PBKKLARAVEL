@@ -108,8 +108,16 @@
     <body>
 
         <div class="search-container">
-            <input type="text" placeholder="Search">
-            <button>Search</button>
+            <form action="" method="get">
+                <div class="input">
+                    <div class="input-group mb-3">
+                        <input type="text" id="keyword_search" name="keyword_search" class="form-control" placeholder="Search"
+                            value="{{ request('keyword_search') }}">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+
         </div>
         @foreach ($asets as $asset)
             <div class="card">
@@ -135,7 +143,7 @@
                             <x-bladewind::input name="tanggal_pinjam" label="Tanggal Peminjaman" required="true" type="date"/>
                             <x-bladewind::input name="keperluan" label="Keperluan" required="true" />
                             <input type="hidden" name="aset_id" value="{{ $asset->id }}">
-                            <button type="submit" class="hidden-submit-button">Pinjam</button>
+                            <button type="submit" class="hidden-submit-button" style="display: none;">Pinjam</button>
                         </form>
                     </x-bladewind::modal>
                 </section>
