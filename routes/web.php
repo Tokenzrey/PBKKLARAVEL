@@ -34,6 +34,10 @@ Route::get('/sandbox/modal', function () {
 //     return view('aset.tabelAset');
 // });
 
+// Route::get('/aset/tabelAset', function () {
+//     return view('aset.tabelAset');
+// });
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -48,7 +52,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/aset/tabelAset', [AsetController::class, 'index'])->middleware(CekSesi::class)->name('aset.index');
 Route::post('/aset/create', [AsetController::class, 'store'])->middleware(CekSesi::class)->name('aset.store');
 Route::get('/aset/show/{id}', [AsetController::class, 'show'])->middleware(CekSesi::class)->name('aset.show');
-Route::put('/aset/update/{id}', [AsetController::class, 'update'])->middleware(CekSesi::class)->name('aset.update');
 Route::put('/aset/update/{id}', [AsetController::class, 'update'])->middleware(CekSesi::class)->name('aset.update');
 Route::get('/aset/delete/{id}', [AsetController::class, 'destroy'])->middleware(CekSesi::class)->name('aset.destroy');
 
