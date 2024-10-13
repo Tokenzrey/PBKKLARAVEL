@@ -47,7 +47,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $rules = [
-        'nama'            => 'required|min:3|max:255',
+        'nama'            => 'required|string|max:255',
         'jenis_kelamin'   => 'required',
         'no_telepon'      => 'required|digits_between:10,15',
         'alamat'          => 'required|min:10|max:255',

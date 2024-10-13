@@ -13,21 +13,20 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update', Auth::user()->id) }}" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
-        @method('patch')
-
+        @method('PUT')
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="nama" :value="__('nama')" />
+            <x-text-input id="nama" name="nama" type="text" class="mt-1 block w-full focus:ring-[#00B5DA] focus:border-[#00B5DA]" :value="old('nama', $user->nama)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('nama')" />
         </div>
 
         <!-- Email -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full focus:ring-[#00B5DA] focus:border-[#00B5DA]" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -52,7 +51,7 @@
         <!-- Jenis Kelamin -->
         <div>
             <x-input-label for="jenis_kelamin" :value="__('Jenis Kelamin')" />
-            <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+            <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#00B5DA] focus:border-[#00B5DA]">
                 <option value="L" {{ old('jenis_kelamin', $user->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
                 <option value="P" {{ old('jenis_kelamin', $user->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
             </select>
@@ -62,14 +61,14 @@
         <!-- No Telepon -->
         <div>
             <x-input-label for="no_telepon" :value="__('No Telepon')" />
-            <x-text-input id="no_telepon" name="no_telepon" type="text" class="mt-1 block w-full" :value="old('no_telepon', $user->no_telepon)" required autocomplete="tel" />
+            <x-text-input id="no_telepon" name="no_telepon" type="text" class="mt-1 block w-full focus:ring-[#00B5DA] focus:border-[#00B5DA]" :value="old('no_telepon', $user->no_telepon)" required autocomplete="tel" />
             <x-input-error class="mt-2" :messages="$errors->get('no_telepon')" />
         </div>
 
         <!-- Alamat -->
         <div>
             <x-input-label for="alamat" :value="__('Alamat')" />
-            <textarea id="alamat" name="alamat" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" required>{{ old('alamat', $user->alamat) }}</textarea>
+            <textarea id="alamat" name="alamat" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-[#00B5DA] focus:border-[#00B5DA]" required>{{ old('alamat', $user->alamat) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
         </div>
     
@@ -77,7 +76,7 @@
         <!-- Gambar -->
         <div>
             <x-input-label for="gambar" :value="__('Gambar Profil')" />
-            <input type="file" id="gambar" name="gambar" class="block mt-1 w-full">
+            <input type="file" id="gambar" name="gambar" class="block mt-1 w-full focus:ring-[#00B5DA] focus:border-[#00B5DA]">
             <x-input-error class="mt-2" :messages="$errors->get('gambar')" />
 
             @if ($user->gambar)
@@ -89,7 +88,7 @@
 
         <!-- Save Button -->
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button style="background-color: #00B5DA; border-color: #00B5DA;">{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p
@@ -100,6 +99,12 @@
                     class="text-sm text-gray-600"
                 >{{ __('Saved.') }}</p>
             @endif
-        </div>
+        </div>      
     </form>
 </section>
+
+<script>
+    function submitForm() {
+        document.get
+    }
+</script>
