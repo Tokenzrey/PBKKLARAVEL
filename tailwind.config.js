@@ -32,6 +32,7 @@ export default {
                 },
                 primary: {
                     main: "#3872C3",
+                    secondary: "#00b4d8",
                     surface: "#D7E3F3",
                     border: "#BDD0EB",
                     hover: "#2F5FA2",
@@ -134,10 +135,21 @@ export default {
                     "50%": { transform: "scale(1.1)" },
                     "100%": { transform: "scale(1)" },
                 },
+                movedelement: {
+                    "0%": { transform: "translate(0)" },
+                    "25%": { transform: "translate(10px, 10px)" },
+                    "50%": { transform: "translate(5px, 5px)" },
+                    "75%": { transform: "translate(10px, -5px)" },
+                    "100%": { transform: "translate(0)" },
+                },
             },
             // Define the animate-plus class with keyframes and duration
             animation: {
-                plus: "plus 0.5s ease-in-out infinite", 
+                plus: "plus 0.5s ease-in-out infinite",
+                "move-element": "movedelement 10s linear infinite",
+            },
+            transformOrigin: {
+                "scale-center": "center",
             },
         },
     },

@@ -20,14 +20,14 @@ return new class extends Migration
             $table->string('status')->comment('ADMIN;USER;  ');
             $table->enum('aktif', ['y', 't'])->default('y');
             $table->string('username', 100);
-            $table->string('gambar', 200);
+            $table->string('gambar') -> nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
 
-            $table->unsignedBigInteger('divisi_id');
+            $table->unsignedBigInteger('divisi_id') -> nullable();
             $table->foreign('divisi_id')->references('id')->on('divisi');
         });
 
