@@ -122,7 +122,7 @@
                             <span class="nav-text">Aset </span>
                         </a>
                         <ul aria-expanded="false" class="mm-collapse">
-                            <li><a href="/">Data Aset</a></li>
+                            <li><a href="{{ route('aset.index') }}">Data Aset</a></li>
                             {{-- <li><a href="{{ route('aset.history') }}">History Aset</a></li> --}}
                             {{-- <li><a href="/">Scann QrCode</a></li> --}}
                             {{-- <li><a href="/">Penjadwalan Pemeliharaan</a></li> --}}

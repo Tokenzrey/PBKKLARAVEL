@@ -24,16 +24,16 @@ class AsetController
         $ruang = Ruang::where('aktif', 'y')->get();
         $vendor = Vendor::where('aktif', 'y')->get();
 
-        $maintenance = Aset::getMaintenanceTime($aset);
-        foreach ($aset as $value) {
-            $value->is_maintenance_time = false;
-            foreach ($maintenance as $value_maintenance) {
-                if ($value->id == $value_maintenance->id) {
-                    $value->is_maintenance_time = $value_maintenance->is_maintenance_time;
-                }
-            }
-        }
-        return view('aset.index', compact('aset', 'kategori', 'jenis_pemeliharaan', 'ruang', 'vendor'));
+        // $maintenance = Aset::getMaintenanceTime($aset);
+        // foreach ($aset as $value) {
+        //     $value->is_maintenance_time = false;
+        //     foreach ($maintenance as $value_maintenance) {
+        //         if ($value->id == $value_maintenance->id) {
+        //             $value->is_maintenance_time = $value_maintenance->is_maintenance_time;
+        //         }
+        //     }
+        // }
+        return view('aset.tabelAset', compact('aset', 'kategori', 'jenis_pemeliharaan', 'ruang', 'vendor'));
     }
 
     public function store(Request $request)
@@ -112,36 +112,35 @@ class AsetController
         }
 
         $gambar = null;
-        if ($request->file('gambar')) {
-            $gambar_extension = $request->file('gambar')->extension();
+        if ($request->file('gambar_edit_{{ $id }}')) {
+            $gambar_extension = $request->file('gambar_edit_{{ $id }}')->extension();
             if (in_array($gambar_extension, array('jpg', 'jpeg', 'png', 'gif')) == false) {
                 Alert::error('Error', 'Type gambar yang diijinkan jpg,jpeg,png,gif!');
                 return redirect()->route('aset.index');
             }
-            $gambar = $request->file('gambar')->store('public/gambar_aset');
+            $gambar = $request->file('gambar_edit_{{ $id }}')->store('public/gambar_aset');
             $gambar = str_replace('public/', '', $gambar);
         }
 
-        $request->qrcode == $request->kode;
-        $aset = Aset::where(['kode' => $request->kode])->first();
         $data_aset = [
-            'kode' => $request->kode,
-            'nama' => $request->nama,
-            'tanggal_pembelian' => $request->tanggal_pembelian,
-            'brand' => $request->brand,
-            'kondisi' => $request->kondisi,
-            'nama_penerima' => $request->nama_penerima,
-            'tempat' => $request->tempat,
-            'deskripsi' => $request->deskripsi,
-            'kategori_id' => $request->kategori_id,
-            'jenis_pemeliharaan_id' => $request->jenis_pemeliharaan_id,
-            'ruang_id' => $request->ruang_id,
-            'vendor_id' => $request->vendor_id
+            'kode' => $request->input('kode_edit_' . $id),
+            'nama' => $request->input('nama_edit_' . $id),
+            'tanggal_pembelian' => $request->input('tanggal_pembelian_edit_' . $id),
+            'brand' => $request->input('brand_edit_' . $id),
+            'kondisi' => $request->input('kondisi_edit_' . $id),
+            'nama_penerima' => $request->input('nama_penerima_edit_' . $id),
+            'tempat' => $request->input('tempat_edit_' . $id),
+            'deskripsi' => $request->input('deskripsi_edit_' . $id),
+            'kategori_id' => $request->input('kategori_id_edit_' . $id),
+            'jenis_pemeliharaan_id' => $request->input('jenis_pemeliharaan_id_edit_' . $id),
+            'ruang_id' => $request->input('ruang_id_edit_' . $id),
+            'vendor_id' => $request->input('vendor_id_edit_' . $id),
         ];
+
         if ($gambar)
             $data_aset['gambar'] = $gambar;
 
-        $aset->where(['id' => $id])->update($data_aset);
+        $aset->update($data_aset);
         Alert::success('Success', 'Aset Berhasil Di Update!');
         return redirect()->route('aset.index');
     }
