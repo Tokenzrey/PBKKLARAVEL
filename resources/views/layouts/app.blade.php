@@ -124,7 +124,7 @@
                         <ul aria-expanded="false" class="mm-collapse">
                             <li><a href="/">Data Aset</a></li>
                             {{-- <li><a href="{{ route('aset.history') }}">History Aset</a></li> --}}
-                            <li><a href="/">Scann QrCode</a></li>
+                            {{-- <li><a href="/">Scann QrCode</a></li> --}}
                             {{-- <li><a href="/">Penjadwalan Pemeliharaan</a></li> --}}
                         </ul>
                     </li>
@@ -139,11 +139,11 @@
                             <span class="nav-text">Peminjaman Manual</span>
                         </a>
                     </li>
-                    <li><a href="/">
+                    {{-- <li><a href="/">
                             <x-heroicon-s-qr-code class="icon" />
                             <span class="nav-text">Peminjaman Qr-Code</span>
                         </a>
-                    </li>
+                    </li> --}}
                     {{-- <li><a href="/">
                             <i class="fa fa-file"></i>
                             <span class="nav-text">History Peminjaman</span>
