@@ -10,6 +10,7 @@ use App\Models\Kategori;
 use App\Models\Peminjaman;
 use App\Models\JadwalPemeliharaan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class DashboardController
@@ -70,7 +71,7 @@ class DashboardController
 
     public function user()
     {
-        $user_id = session('userdata')['nip'];
+        $user_id = Auth::user()->id;
         $aset = Aset::join('kategori', 'kategori.id', '=', 'aset.id')
             ->join('peminjaman', 'peminjaman.id', '=', 'aset.id')
             ->select(

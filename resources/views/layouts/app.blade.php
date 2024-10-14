@@ -129,16 +129,16 @@
                         </ul>
                     </li>
                     @else
-                    <li><a href="{{ route('dashboard.admin') }}">
+                    <li><a href="{{ route('dashboard.user') }}">
                             <x-heroicon-s-home class="icon" />
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
-                    <li><a href="{{ route('peminjaman.index') }}">
+                    {{-- <li><a href="{{ route('peminjaman.index') }}">
                             <x-heroicon-m-shopping-cart class="icon" />
                             <span class="nav-text">Peminjaman Manual</span>
                         </a>
-                    </li>
+                    </li> --}}
                     {{-- <li><a href="/">
                             <x-heroicon-s-qr-code class="icon" />
                             <span class="nav-text">Peminjaman Qr-Code</span>
@@ -149,13 +149,7 @@
                             <span class="nav-text">History Peminjaman</span>
                         </a>
                     </li> --}}
-                    <li><a href="{{ route('logout') }}">
-                            <x-heroicon-s-arrow-left-start-on-rectangle class="icon" />
-                            <span class="nav-text">Logout</span>
-                        </a>
-                    </li>
                     @endif
-                    @if (Auth::user()->status === 'ADMIN')
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <x-heroicon-m-shopping-cart class="icon" />
                             <span class="nav-text">Transaksi</span>
@@ -166,7 +160,11 @@
                             {{-- <li><a href="/">History Peminjaman</a></li> --}}
                         </ul>
                     </li>
-                    @endif
+                    <li><a href="{{ route('logout') }}">
+                            <x-heroicon-s-arrow-left-start-on-rectangle class="icon" />
+                            <span class="nav-text">Logout</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
