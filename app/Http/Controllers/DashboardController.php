@@ -46,6 +46,11 @@ class DashboardController
         $kategoriAsset_count = Kategori::withCount('aset')->get()->pluck('aset_count', 'nama')->toArray();
 
         $alert_maintenance_time = Aset::getMaintenanceTime($aset)->where('is_maintenance_time',true);
+
+        if (Auth::user()->status != 'ADMIN') {
+            return redirect()->route('dashboard.user');
+        }
+
         $total_jp_notif += $alert_maintenance_time->count();
         return view('dashboard.admin', [
             'viewTotalPeminjaman'       => $totalPeminjaman,
@@ -83,6 +88,11 @@ class DashboardController
                 'peminjaman.status as status_peminjaman'
             )
             ->where(['aset.aktif' => 'y', 'user_id' => $user_id])->get();
+
+        if (Auth::user()->status == 'ADMIN') {
+            return redirect()->route('dashboard.admin');
+        }
+
         return view('dashboard.user', [
             'aset' => $aset
         ]);

@@ -15,7 +15,7 @@
                                         Terus pantau dan kelola aset agar dapat terkelola dengan baik
                                     </x-typography>
 
-                                    <x-button-link href="/" class="text-neutral-10 border-0 !rounded-full mt-8"
+                                    <x-button-link href="{{ route('aset.index') }}" class="text-neutral-10 border-0 !rounded-full mt-8"
                                         variant="warning">
                                         Lihat Daftar Aset
                                     </x-button-link>
@@ -58,13 +58,13 @@
                                             <x-typography as="span" variant="t" weight="bold" class="text-primary-secondary">
                                                 {{ $jml_peminjaman }}
                                             </x-typography>
-                                            yang melakukan peminjaman <br>
+                                             peminjaman <br>
                                             <div class="flex gap-2 justify-center my-2">
                                                 <x-typography as="b" variant="bt">Go to</x-typography>
                                                 <x-heroicon-s-arrow-right class="w-[16px]" />
                                             </div>
 
-                                            <x-unstyled-link href="/" as="p" variant="t" weight="bold" class="text-primary-secondary">
+                                            <x-unstyled-link href="{{ route('peminjaman.user-data') }}" as="p" variant="t" weight="bold" class="text-primary-secondary">
                                                 Data Peminjaman
                                             </x-unstyled-link>
                                         </x-typography>

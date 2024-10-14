@@ -49,13 +49,14 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'username' => strtolower($request->name), // Atur username dari nama, bisa disesuaikan
             'password' => Hash::make($request->password),
+            'divisi_id' => 1,
         ]);
     
         event(new Registered($user));
     
         Auth::login($user);
     
-        return redirect(route('dashboard'));
+        return redirect(route('dashboard.user'));
     }
     
 }
