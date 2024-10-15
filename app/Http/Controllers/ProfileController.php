@@ -110,6 +110,18 @@ class ProfileController
         $user->gambar = str_replace('public/', '', $gambarPath); // Simpan path gambar baru
     }
 
+    // Cek jika id_card baru diupload, jika ya, simpan dan ganti id_card lama
+    if ($request->hasFile('id_card')) {
+        // Hapus id_card lama jika ada
+        if ($user->id_card) {
+            Storage::delete('public/' . $user->id_card);
+        }
+
+        // Simpan id_card baru
+        $id_cardPath = $request->file('id_card')->store('id_card_user', 'public'); // Store directly in public
+        $user->id_card = str_replace('public/', '', $id_cardPath); // Simpan path id_card baru
+    }
+
     // Update waktu 'updated_at' secara otomatis
     $data['updated_at'] = now();
 
